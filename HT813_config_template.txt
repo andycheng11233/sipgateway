@@ -1,0 +1,358 @@
+================================================================================
+    GRANDSTREAM HT813 SIP GATEWAY CONFIGURATION TEMPLATE
+================================================================================
+
+DEVICE INFORMATION:
+-------------------
+Device Model: Grandstream HT813
+Configuration Date: [DATE]
+Configured By: [YOUR NAME]
+Location: [HOME/OFFICE LOCATION]
+
+================================================================================
+SECTION 1: BASIC NETWORK SETTINGS
+================================================================================
+
+Internet Connection Type: [ ] DHCP   [ ] Static IP
+
+If DHCP:
+  - Let device obtain IP automatically
+
+If Static IP:
+  IP Address:          ___.___.___.___ (e.g., 192.168.1.100)
+  Subnet Mask:         ___.___.___.___ (e.g., 255.255.255.0)
+  Default Gateway:     ___.___.___.___ (e.g., 192.168.1.1)
+
+DNS Configuration:
+  Primary DNS:         ___.___.___.___  (e.g., 8.8.8.8)
+  Secondary DNS:       ___.___.___.___  (e.g., 8.8.4.4)
+
+QoS Settings:
+  Layer 3 QoS:         48 (recommended for voice)
+  Layer 2 QoS:         802.1Q/VLAN Tag (optional): _____
+
+================================================================================
+SECTION 2: SIP PROVIDER INFORMATION (For FXS Port)
+================================================================================
+
+SIP Provider Name: ________________________________
+
+Account 1 (Primary):
+  Primary SIP Server:       ________________________________
+                            (e.g., sip.provider.com or 203.0.113.10)
+  
+  Failover SIP Server:      ________________________________
+                            (Optional - leave blank if none)
+  
+  Outbound Proxy:           ________________________________
+                            (Optional - leave blank if not required)
+  
+  SIP Transport:            [ ] UDP   [ ] TCP   [ ] TLS
+  
+  SIP Port:                 _____ (Usually 5060 for UDP/TCP, 5061 for TLS)
+
+SIP Account Credentials:
+  SIP User ID:              ________________________________
+                            (Your SIP username/account number)
+  
+  Authenticate ID:          ________________________________
+                            (Usually same as SIP User ID)
+  
+  Authenticate Password:    ________________________________
+                            (Your SIP account password)
+
+  **SECURITY WARNING**: This template will contain sensitive passwords.
+  Store securely and never share publicly or commit to version control!
+  
+  Display Name:             ________________________________
+                            (Name shown on caller ID)
+
+Registration Settings:
+  SIP Registration:         [ ] Yes   [ ] No  (Recommend: Yes)
+  Registration Expiration:  _____ seconds (Typical: 60-3600, Recommend: 60)
+  Unregister on Reboot:     [ ] Yes   [ ] No  (Recommend: No)
+
+NAT Traversal Settings:
+  NAT Traversal:            [ ] Keep-Alive   [ ] STUN   [ ] Auto   [ ] None
+  
+  If STUN selected:
+    STUN Server:            ________________________________
+                            (e.g., stun.l.google.com or stun.provider.com)
+
+================================================================================
+SECTION 3: AUDIO/CODEC SETTINGS (For FXS Port)
+================================================================================
+
+Preferred Codec Priority (1=highest priority):
+  Priority 1:  [ ] PCMU (G.711µ)  [ ] PCMA (G.711a)  [ ] G.722  [ ] G.729
+  Priority 2:  [ ] PCMU (G.711µ)  [ ] PCMA (G.711a)  [ ] G.722  [ ] G.729
+  Priority 3:  [ ] PCMU (G.711µ)  [ ] PCMA (G.711a)  [ ] G.722  [ ] G.729
+
+Audio Settings:
+  DTMF Method:              [ ] RFC2833   [ ] In-Audio   [ ] SIP INFO
+  VAD (Voice Activity):     [ ] Yes   [ ] No  (Recommend: No)
+  Echo Cancellation:        [ ] Yes   [ ] No  (Recommend: Yes)
+  Jitter Buffer Type:       [ ] Fixed   [ ] Adaptive  (Recommend: Adaptive)
+
+================================================================================
+SECTION 4: FXS PORT DIAL PLAN
+================================================================================
+
+What calling patterns do you need? (Check all that apply)
+  [ ] Local 7-digit calls (e.g., 555-1234)
+  [ ] 10-digit calls (e.g., 202-555-1234)
+  [ ] 11-digit calls (e.g., 1-202-555-1234)
+  [ ] International calls (011... or 00...)
+  [ ] International format (+1...)
+  [ ] Emergency services (911, 112, etc.)
+  [ ] Star codes (*72, *67, etc.)
+
+Custom Dial Plan:
+  ________________________________________________________________
+  
+  (If unsure, use: { x+ | \+x+ | *x+ | *xx*x+ } for flexible dialing)
+
+================================================================================
+SECTION 5: FXO PORT CONFIGURATION (PSTN LINE)
+================================================================================
+
+FXO Port Settings:
+  Enable FXO Port:          [ ] Yes   [ ] No
+
+Country/Region Settings:
+  Country:                  ________________________________
+                            (e.g., USA, UK, Canada, Australia)
+  
+  Based on country, verify:
+    Impedance:              [ ] 600 ohm (USA, Canada)
+                            [ ] 900 ohm (Europe)
+                            [ ] Complex 2 (UK, Australia)
+                            [ ] Other: _______
+    
+    Caller ID Scheme:       [ ] Bellcore/Telcordia (USA)
+                            [ ] ETSI (Europe)
+                            [ ] BT (UK)
+                            [ ] Other: ________________
+
+FXO Behavior:
+  Ring Through to FXS:      [ ] Yes   [ ] No
+                            (Ring the connected analog phone when PSTN rings)
+  
+  Loop Current Detection:   [ ] Yes   [ ] No  (Recommend: Yes)
+  
+  Disconnect Tone:          [ ] Yes   [ ] No  (Recommend: Yes)
+
+FXO to SIP Routing:
+  Route incoming PSTN calls to:
+    [ ] FXS Port (ring the analog phone)
+    [ ] SIP Account (forward to VoIP)
+    [ ] Both (ring both simultaneously)
+  
+  If routing to SIP, which account?: Account _____
+  
+  Offhook Auto-Dial Number: ________________________________
+                            (Optional - number to dial when FXO goes offhook)
+
+FXO Dial Plan:
+  ________________________________________________________________
+  
+  (If unsure, use: { x+ } to match any number pattern)
+
+================================================================================
+SECTION 6: CALL ROUTING STRATEGY
+================================================================================
+
+Select your preferred routing strategy:
+
+Strategy 1 - SIP Primary (Recommended for beginners):
+  [ ] Use SIP for all outbound calls from FXS port
+  [ ] Use FXO as backup when SIP unavailable
+  [ ] Route incoming PSTN calls to FXS phone
+
+Strategy 2 - Selective Routing (Cost optimization):
+  [ ] Route local calls through FXO (PSTN)
+  [ ] Route long distance/international through SIP
+  [ ] Requires custom dial plan
+
+Strategy 3 - PSTN Primary:
+  [ ] Use FXO (PSTN) for all calls
+  [ ] Use SIP as backup
+  [ ] Traditional phone line with VoIP backup
+
+Your Choice: Strategy _____ 
+
+Custom Routing Rules (if needed):
+  ________________________________________________________________
+  ________________________________________________________________
+
+================================================================================
+SECTION 7: PHONE NUMBER(S)
+================================================================================
+
+Your Phone Numbers:
+  PSTN Line Number:         ________________________________
+                            (Number of line connected to FXO port)
+  
+  SIP/VoIP Number:          ________________________________
+                            (Number assigned by SIP provider)
+  
+  Additional Numbers:       ________________________________
+                            ________________________________
+
+================================================================================
+SECTION 8: ADVANCED SIP SETTINGS (Optional)
+================================================================================
+
+Session Management:
+  Session Timer:            [ ] Yes   [ ] No  (Recommend: Yes for NAT)
+  Session Expiration:       _____ seconds (Typical: 180)
+
+Timers (leave default unless required by provider):
+  SIP T1 Timeout:           _____ seconds (Default: 0.5)
+  SIP T2 Timeout:           _____ seconds (Default: 4)
+
+Local Ports:
+  Local SIP Port:           _____ (Default: 5060)
+  Local RTP Port:           _____ (Default: 5004)
+  Use Random Port:          [ ] Yes   [ ] No  (Recommend: No)
+
+Keep-Alive:
+  Keep-Alive Interval:      _____ seconds (Typical: 20-60)
+  Keep-Alive Method:        [ ] UDP   [ ] TCP   [ ] NOTIFY
+
+Special Features:
+  Symmetric RTP:            [ ] Yes   [ ] No
+  Enable SRTP (Encryption): [ ] Yes   [ ] No
+  Early Media:              [ ] Yes   [ ] No
+
+================================================================================
+SECTION 9: FAX CONFIGURATION (If using fax machine)
+================================================================================
+
+Fax Support:
+  Fax Mode:                 [ ] Pass-Through   [ ] T.38   [ ] Disabled
+  
+If T.38 selected:
+  T.38 Redundancy:          [ ] Yes   [ ] No  (Recommend: Yes)
+  Maximum Bit Rate:         _____ bps (Typical: 14400)
+
+Fax Connected To:
+  [ ] FXS Port (fax via SIP)
+  [ ] FXO Port (fax via PSTN)
+
+================================================================================
+SECTION 10: SECURITY SETTINGS
+================================================================================
+
+Web Interface Security:
+  Admin Password:           ________________ (MUST change from default!)
+  End User Password:        ________________ (Optional)
+  
+  Restrict Web Access:      [ ] Yes   [ ] No
+  If Yes, allowed IPs:      ___.___.___.___ / ___.___.___.___ / etc.
+
+SIP Security:
+  SIP Password Strength:    [ ] Strong (recommended by provider)
+  Disable Telnet:           [ ] Yes   [ ] No  (Recommend: Yes)
+  Enable HTTPS:             [ ] Yes   [ ] No  (Recommend: Yes)
+  SSH Access:               [ ] Enable   [ ] Disable  (Recommend: Disable)
+
+================================================================================
+SECTION 11: ADDITIONAL FEATURES
+================================================================================
+
+Call Features (check if needed):
+  [ ] Call Waiting
+  [ ] Call Forwarding (specify conditions): ____________________________
+  [ ] Do Not Disturb
+  [ ] Anonymous Call Rejection
+  [ ] Voicemail (MWI - Message Waiting Indicator)
+  [ ] 3-Way Conferencing
+  [ ] Call Transfer
+
+If Voicemail enabled:
+  Voicemail Server:         ________________________________
+  Voicemail Number:         ________________________________
+
+================================================================================
+SECTION 12: TESTING CHECKLIST
+================================================================================
+
+After configuration, test the following:
+
+FXS Port Tests:
+  [ ] Pick up phone, hear dial tone
+  [ ] Make outbound call through SIP - successful
+  [ ] Receive inbound call on SIP - successful
+  [ ] Audio quality both directions - good
+  [ ] DTMF tones work (IVR menus) - successful
+  [ ] Call duration > 5 minutes - successful
+
+FXO Port Tests:
+  [ ] PSTN line connected, detected by HT813
+  [ ] Receive incoming call on PSTN - successful
+  [ ] PSTN calls route correctly (to FXS or SIP)
+  [ ] Caller ID displays correctly
+  [ ] Call quality good
+
+Integration Tests:
+  [ ] Failover works (unplug network, FXO takes over)
+  [ ] Both ports can be used simultaneously
+  [ ] No echo or audio issues
+  [ ] Calls don't drop unexpectedly
+
+Special Features (if configured):
+  [ ] Fax send/receive working
+  [ ] Call forwarding works
+  [ ] Voicemail notification works
+  [ ] Emergency numbers work (911, etc.)
+
+================================================================================
+NOTES AND OBSERVATIONS:
+================================================================================
+
+Issues encountered:
+________________________________________________________________
+________________________________________________________________
+________________________________________________________________
+
+Solutions applied:
+________________________________________________________________
+________________________________________________________________
+________________________________________________________________
+
+Special configurations:
+________________________________________________________________
+________________________________________________________________
+________________________________________________________________
+
+Performance observations:
+________________________________________________________________
+________________________________________________________________
+________________________________________________________________
+
+================================================================================
+SUPPORT CONTACT INFORMATION
+================================================================================
+
+SIP Provider Support:
+  Phone:    ________________________________
+  Email:    ________________________________
+  Website:  ________________________________
+
+Network/ISP Support:
+  Phone:    ________________________________
+  Email:    ________________________________
+  Website:  ________________________________
+
+HT813 Resources:
+  Grandstream Support: https://www.grandstream.com/support
+  User Manual: http://www.grandstream.com/support/ht813
+  Firmware Updates: Available through web interface or grandstream.com
+
+================================================================================
+END OF CONFIGURATION TEMPLATE
+================================================================================
+
+VERSION: 1.0
+LAST UPDATED: 2026-01-02
