@@ -194,7 +194,7 @@ This document provides pre-configured examples for popular SIP/VoIP providers to
 
 ## Google Voice
 
-**Note**: Google Voice doesn't provide direct SIP support. You need an OBi device or use a gateway service.
+**Important Note**: Google Voice deprecated direct SIP support in 2014. The methods below use third-party gateway services that may have limitations or costs. For new setups, consider using a dedicated VoIP provider instead.
 
 ### Option 1: Using OBiTALK Bridge (Recommended)
 

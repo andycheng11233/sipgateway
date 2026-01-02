@@ -60,6 +60,9 @@ SIP Account Credentials:
   
   Authenticate Password:    ________________________________
                             (Your SIP account password)
+
+  **SECURITY WARNING**: This template will contain sensitive passwords.
+  Store securely and never share publicly or commit to version control!
   
   Display Name:             ________________________________
                             (Name shown on caller ID)
