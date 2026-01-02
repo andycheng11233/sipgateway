@@ -1,0 +1,2 @@
+# sipgateway
+sip configuration
